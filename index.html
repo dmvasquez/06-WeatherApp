@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="" ng-app="app">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Weather App</title>
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css" />
+	</head>
+	<body ng-controller="WeatherAppController as weather">
+		<div class="container-fluid">
+
+			<!-- Top Banner -->
+			<div class="well well-lg col-xl-12">
+				<h1 class="lead" style="font-size: 50px">Origin Weather Application</h1>
+				<p class="lead">Always know if you'll need an umbrella!</p>
+			</div>
+			
+			<!-- Search Interface -->
+			<div>
+
+				<!-- Preset Navbar of cities -->
+				<div class="btn-group">
+					<button type="button" class="btn btn-primary" ng-click="weather.callWeatherApi('San Diego')">San Diego</button>
+					<button type="button" class="btn btn-primary" ng-click="weather.callWeatherApi('New York')">New York</button>
+					<button type="button" class="btn btn-primary" ng-click="weather.callWeatherApi('Washington D.C.')">Washington D.C.</button>
+					<button type="button" class="btn btn-primary" ng-click="weather.callWeatherApi('London')">London</button>
+					<button type="button" class="btn btn-primary" ng-click="weather.callWeatherApi('Tokyo')">Tokyo</button>
+				</div>
+				
+				<!-- Search Input and Button -->
+				<form>
+					<div class="form-group">
+						<div class="input-group col-md-12">
+							<input ng-model="weather.city" type="text" class="form-control" name="" placeholder="Enter City">
+							<span class="input-group-btn">
+								<button class="btn btn-default" ng-click="weather.callWeatherApi(weather.city)">Find!</button>
+							</span>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<!-- Panel Row -->
+			<div class="row" ng-if="weather.data === true">
+				<!-- City Information Div -->
+				<div class="col-sm-6">
+					<div class="panel panel-info ">
+					 	<div class="panel-heading">
+					 		City Information
+					 	</div>
+					  	<div class="panel-body">
+							<!-- City and Location -->
+							<div style="text-align: center">
+								<h1><image ng-src=http://openweathermap.org/img/w/{{weather.cityData.weather[0].icon}}.png>{{weather.cityData.name}}</h1>
+								<p>Longitude: {{weather.cityData.coord.lon}}</p>
+								<p>Latitude: {{weather.cityData.coord.lat}}</p>
+							</div>
+							
+							<table class="table table-hover" style="text-align: center">
+								<thead>
+									<tr></tr>
+									<tr>
+										<!-- Temperature -->
+										<td>
+											<strong>Temperature (F)</strong>
+											<h4 class="text-success"><strong>{{weather.cityData.main.temp}}</strong></h4>
+										</td>
+										<!-- Pressure -->
+										<td>
+											<strong>Pressure</strong>
+											<h4 class="text-success"><strong>{{weather.cityData.main.pressure}}</strong></h4>
+										</td>
+										<!-- Humidity -->
+										<td>
+											<strong>Humidity</strong>
+											<h4 class="text-success"><strong>{{weather.cityData.main.humidity}}</strong></h4>
+										</td>
+									</tr>
+									<tr>
+										<!-- Lowest Temp -->
+										<td>
+											<strong>Lowest Temp (F)</strong>
+											<h4 class="text-success"><strong>{{weather.cityData.main.temp_min}}</strong></h4>
+										</td>
+										<!-- Highest Temp -->
+										<td>
+											<strong>Highest Temp (F)</strong>
+											<h4 class="text-success"><strong>{{weather.cityData.main.temp_max}}</strong></h4>
+										</td>
+										<!-- Wind Speed -->
+										<td>
+											<strong>Wind Speed</strong>
+											<h4 class="text-success"><strong>{{weather.cityData.wind.speed}}</strong></h4>
+										</td>
+									</tr>
+								</thead>
+							</table>
+							
+						</div>
+					</div>
+				</div>
+
+				<!-- Search History -->
+				<div class="col-sm-6">
+					<div class="panel panel-info">
+					 	<div class="panel-heading">Search History</div>
+					  	<div class="panel-body">
+						<!-- Ng-Repeat of Cities Searched -->
+								<table class="table table-hover table-striped">
+									<tbody>
+										<tr ng-repeat="cityHistory in weather.aHistory">
+											<td class="col-sm-8">{{cityHistory.city}}</td>
+											<td class="col-sm-4" style="text-align: right">{{cityHistory.date}}<br>{{cityHistory.time}}</td>
+										</tr>
+									</tbody>
+								</table>		
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+ 
+		<!-- Angular.js -->
+	    <script src="bower_components/angular/angular.js"></script>
+		<!-- jQuery -->
+		<script src="//code.jquery.com/jquery.js"></script>
+		<!-- Bootstrap JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<!--Toastr-->
+	    <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+ 		<!--ngAnimate-->
+ 		<script src="bower_components/angular-animate/angular-animate.js"></script>
+ 		<!--JavaScript Files-->
+	    <script src="app/app.module.js"></script>
+	    <script src="app/Home/home.controller.js"></script>
+		
+	
+	</body>
+</html>
